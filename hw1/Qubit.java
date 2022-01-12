@@ -24,8 +24,12 @@ public class Qubit{
 	 */
 	public Qubit(String v)
 	{
-		/* TODO - fill in this code */
-		System.out.println("This method not yet implemented");
+
+		if(v.equals("White"))
+			this.value = 0;
+		if(v.equals("Black"))
+			this.value = 1;
+
 	}
 
 
@@ -34,21 +38,20 @@ public class Qubit{
 	 */
 	public void setValue(float v)
 	{  
-		/* TODO - fill in this code */
-		System.out.println("This method not yet implemented");
+		this.value = v;
 	}
 
 	public void setValue(String v)
 	{  
-		/* TODO - fill in this code */
-		System.out.println("This method not yet implemented");
+		if(v.equals("White"))
+			this.setValue(1);
+		if(v.equals("Black"))
+			this.setValue(0);
 	}
 
 	public float getValue()
 	{  
-		/* TODO - fill in this code */
-		System.out.println("This method not yet implemented");
-		return -1;
+		return this.value;
 	}
 
 	/* not
@@ -59,9 +62,10 @@ public class Qubit{
 	 */
 	public void not()
 	{
-		/* TODO - fill in this code */
-		System.out.println("This method not yet implemented");
-			
+		float current = this.getValue();
+		float flip = -1 * current + 1;
+
+		this.setValue(flip);
 	}
 
 	/* These are methods we implement so that we can use Qubit with

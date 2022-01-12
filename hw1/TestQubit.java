@@ -48,7 +48,6 @@ public class TestQubit
 		}
 	}
 
-
 	public static void main(String[] args)
 	{
 		int testNumber = 2;
@@ -88,7 +87,7 @@ public class TestQubit
 				// test not
 				break;
 			default:
-				System.out.println("Test "+testNumber"+ not supported");
+				System.out.println("Test "+testNumber + " not supported");
 		}
 	}
 }
