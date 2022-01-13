@@ -44,9 +44,9 @@ public class Qubit{
 	public void setValue(String v)
 	{  
 		if(v.equals("White"))
-			this.setValue(1);
-		if(v.equals("Black"))
 			this.setValue(0);
+		if(v.equals("Black"))
+			this.setValue(1);
 	}
 
 	public float getValue()
