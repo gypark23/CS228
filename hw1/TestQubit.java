@@ -48,6 +48,36 @@ public class TestQubit
 		}
 	}
 
+	public static int TestNot(Qubit start, Qubit expected, String[] args)
+	{
+		// make sure the degrees input is there
+		if (args.length < 3)	
+		{
+			System.out.println("Too few arguments for "+
+				"TestNot: " +args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		// read the command-line argument
+		// perform the operation
+		start.not();
+		// check the result and report
+		if (Qubit.compare(start, expected) == 0)
+		{
+			System.out.println("Qubit setNot(): Success!");
+			return 1;
+		}
+		else
+		{
+			System.out.println("Qubit setValue(): FAIL!");
+			System.out.println("Expected: "+expected);
+			System.out.println("Actual: "+start);
+			return 0;
+		}
+	}
+
 	public static void main(String[] args)
 	{
 		int testNumber = 2;
@@ -84,7 +114,7 @@ public class TestQubit
 				// test getValue
 				break;
 			case (4):
-				// test not
+				TestNot(testQubit, expectedQubit, args);
 				break;
 			default:
 				System.out.println("Test "+testNumber + " not supported");
