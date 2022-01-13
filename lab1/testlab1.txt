@@ -1,0 +1,3 @@
+java TestLab1 4 0 0
+java TestLab1 4 1 7
+java TestLab1 4 100 700

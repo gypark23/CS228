@@ -1,0 +1,2 @@
+java TestQubit 1 0 4
+java TestQubit 0 1 4
