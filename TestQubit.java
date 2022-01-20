@@ -223,6 +223,31 @@ public class TestQubit {
 			return 0;
 		}
 	}
+	
+	public static int Testhgate(Qubit start, Qubit expected, String[] args) {
+		// make sure the degrees input is there
+		if (args.length < 3) {
+			System.out.println("Too few arguments for " +
+					"Testhgate: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		// read the command-line argument
+		// perform the operation
+		start.hgate();
+		// check the result and report
+		if (Qubit.compare(start, expected) == 0) {
+			System.out.println("Qubit hgate(): Success!");
+			return 1;
+		} else {
+			System.out.println("Qubit hgate(): FAIL!");
+			System.out.println("Expected: " + expected);
+			System.out.println("Actual: " + start);
+			return 0;
+		}
+	}
 
 	public static int Testcnot(Qubit start, Qubit expected, String[] args)
 	{
@@ -339,6 +364,7 @@ public class TestQubit {
 				TestgetPhase(testQubit, expectedQubit, args);
 				break;
 			case (7):
+				Testhgate(testQubit, expectedQubit, args);
 				break;
 			case (8):
 				Testswap(testQubit, expectedQubit, args);

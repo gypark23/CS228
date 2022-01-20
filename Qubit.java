@@ -128,16 +128,17 @@ public class Qubit{
 		this.setValue(flip);
 	}
 
-	/* These are methods we implement so that we can use Qubit with
-	 * standard operations - like System.out.println and comparison 
-	 * These are critical for grading, so don't change them!!!
-	 */
-
 	// support the following inputs: 0 with positive phase, 1 with positive phase, 
 	// superposition of 50\%, superposition of 50\% with negative phase
 	public void hgate()
 	{
+		if(this.getValue() != 0 && this.getValue() != 1 && this.getPhase() != 1)
+		{
+			System.out.println("error: wrong input value or phase");
+			return;
+		}
 
+		this.setValue((float)-0.5);
 	}
 
 	// make sure your implementation works for superposition and phase 
