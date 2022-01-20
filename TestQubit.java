@@ -259,18 +259,18 @@ public class TestQubit {
 			return 0;
 		}
 
-		float cnot_start_val = Float.parseFloat(args[3]);
-		float cnot_expected_val = Float.parseFloat(args[4]);
+		Qubit startTarget = new Qubit(Float.parseFloat(args[3]));
+		Qubit expectedTarget = new Qubit(Float.parseFloat(args[4]));
 
-		start.cnot(expected);
+		start.cnot(startTarget);
 
-		if (start.getValue() == cnot_start_val && expected.getValue() == cnot_expected_val) {
+		if (Qubit.compare(start, expected) == 0 && Qubit.compare(startTarget, expectedTarget) == 0) {
 			System.out.println("Qubit cnot(): Success!");
 			return 1;
 		} else {
 			System.out.println("Qubit cnot(): FAIL!");
-			System.out.println("Expected: " + cnot_start_val + " " + cnot_expected_val);
-			System.out.println("Actual: " + start.getValue() + " " + expected.getValue());
+			System.out.println("Expected: " + start.getValue() + " " + startTarget.getValue());
+			System.out.println("Actual: " + expected.getValue() + " " + expectedTarget.getValue());
 			return 0;
 		}
 	}

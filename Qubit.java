@@ -189,14 +189,22 @@ public class Qubit{
 		Float a = (float)Math.sqrt(1 - this.value);
 		Float b = (float)Math.sqrt(this.value);
 
+		char phase = (this.getPhase() == 1) ? '+' : '-'; 
+
 		if(a == 0)
-			return "|1>";
+		{
+			if (this.getPhase() == -1)
+				return "- 1>";
+			else
+				return "|1>";
+		}
 		if(b == 0)
 			return "|0>";
 
+
 		DecimalFormat df = new DecimalFormat("0.##");
 			
-		return df.format(a) + "|0> + " + df.format(b) + "|1>";
+		return df.format(a) + "|0> " + phase + " " + df.format(b) + "|1>";
 	}
 
 	public String toString()

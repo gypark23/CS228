@@ -1,0 +1,52 @@
+java TestQubit 0 1 0 Black
+java TestQubit 1 0 0 White
+
+java TestQubit 1 0 1 0
+java TestQubit 0 0 1 0
+java TestQubit 1 1 1 1
+Java TestQubit 0 1 1 1
+
+java TestQubit 1 0 2 White
+java TestQubit 0 0 2 White
+java TestQubit 1 1 2 Black
+java TestQubit 0 1 2 Black
+
+java TestQubit 1 1 3 1
+java TestQubit 0 0 3 0
+
+java TestQubit 1 0 4
+java TestQubit 0 1 4
+
+java TestQubit -0.5 0.5 5 1
+java TestQubit 0.5 0.5 5 1
+java TestQubit -0.5 -0.5 5 -1
+java TestQubit 0.5 -0.5 5 -1
+
+java TestQubit -0.75 -0.75 6 -1
+java TestQubit 0.75 0.75 6 1
+java TestQubit 0 0 6 1
+
+java TestQubit 1 -0.5 7
+java TestQubit 0 -0.5 7
+
+java TestQubit -0.3 0.6 8 0.6 -0.3
+java TestQubit 0.6 -0.3 8 -0.3 0.6
+java TestQubit 0 0 8 0 0
+
+java TestQubit 1 1 9 0 1
+java TestQubit 0 0 9 0 0
+java TestQubit 1 1 9 1 0
+java TestQubit 0 0 9 1 1
+
+java TestQubit -0.5 0.5 10
+java TestQubit -1 1 10
+java TestQubit 0 0 10
+java TestQubit -0.8 0.8 10
+
+java TestQubit 0.5 0.5 11
+java TestQubit 1 1 11
+java TestQubit -1 -1 11
+java TestQubit 0 0 11
+java TestQubit -0.5 -0.5 11
+java TestQubit -0.01 -0.01 11
+java TestQubit 0.99 0.99 11
