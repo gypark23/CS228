@@ -152,6 +152,151 @@ public class TestQubit {
 		}
 	}
 
+	public static int TestsetPhase(Qubit start, Qubit expected, String[] args)
+	{
+		if (args.length < 4) {
+			System.out.println("Too few arguments for " +
+					"setPhase: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+		start.setPhase(Integer.parseInt(args[3]));
+
+		if (Qubit.compare(start, expected) == 0) {
+			System.out.println("Qubit setPhase(): Success!");
+			return 1;
+		} else {
+			System.out.println("Qubit setPhase(): FAIL!");
+			System.out.println("Expected: " + start.getPhase());
+			System.out.println("Actual: " + expected.getPhase());
+			return 0;
+		}
+	}
+
+	public static int TestgetPhase(Qubit start, Qubit expected, String[] args)
+	{
+		if (args.length < 4) {
+			System.out.println("Too few arguments for " +
+					"getPhase: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+		
+		int phase = start.getPhase();
+		int expectedval = Integer.parseInt(args[3]);
+
+		if (Qubit.compare(start, expected) == 0 && phase == expectedval) {
+			System.out.println("Qubit getPhase(): Success!");
+			return 1;
+		} else {
+			System.out.println("Qubit getPhase(): FAIL!");
+			System.out.println("Expected: " + expectedval);
+			System.out.println("Actual: " + phase);
+			return 0;
+		}
+	}
+
+	public static int Testswap(Qubit start, Qubit expected, String[] args)
+	{
+		if (args.length < 5) {
+			System.out.println("Too few arguments for " +
+					"swap: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		float swapped_start_val = Float.parseFloat(args[3]);
+		float swapped_expected_val = Float.parseFloat(args[4]);
+
+		start.swap(expected);
+
+		if (start.getValue() == swapped_start_val && expected.getValue() == swapped_expected_val) {
+			System.out.println("Qubit swap(): Success!");
+			return 1;
+		} else {
+			System.out.println("Qubit swap(): FAIL!");
+			System.out.println("Expected: " + swapped_start_val + " " + swapped_expected_val);
+			System.out.println("Actual: " + start.getValue() + " " + expected.getValue());
+			return 0;
+		}
+	}
+
+	public static int Testcnot(Qubit start, Qubit expected, String[] args)
+	{
+		if (args.length < 5) {
+			System.out.println("Too few arguments for " +
+					"cnot: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		float cnot_start_val = Float.parseFloat(args[3]);
+		float cnot_expected_val = Float.parseFloat(args[4]);
+
+		start.cnot(expected);
+
+		if (start.getValue() == cnot_start_val && expected.getValue() == cnot_expected_val) {
+			System.out.println("Qubit cnot(): Success!");
+			return 1;
+		} else {
+			System.out.println("Qubit cnot(): FAIL!");
+			System.out.println("Expected: " + cnot_start_val + " " + cnot_expected_val);
+			System.out.println("Actual: " + start.getValue() + " " + expected.getValue());
+			return 0;
+		}
+	}
+
+	public static int Testmeasure(Qubit start, Qubit expected, String[] args) {
+		// make sure the degrees input is there
+		if (args.length < 3) {
+			System.out.println("Too few arguments for " +
+					"Testmeasure: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		// read the command-line argument
+		// perform the operation
+		int measure = start.measureValue();
+		// check the result and report
+		if (Qubit.compare(start, expected) == 0) {
+			System.out.println("Qubit measureValue(): Success!");
+			System.out.println("Measured Value: " + measure);
+			return 1;
+		} else {
+			System.out.println("Qubit measureValue(): FAIL!");
+			return 0;
+		}
+	}
+
+	public static int TesttoBraKet(Qubit start, Qubit expected, String[] args) {
+		// make sure the degrees input is there
+		if (args.length < 3) {
+			System.out.println("Too few arguments for " +
+					"TesttoBraKet: " + args.length);
+			System.out.println("Missing value input");
+			System.out.println("Test FAILED");
+			return 0;
+		}
+
+		// check the result and report
+		if (Qubit.compare(start, expected) == 0) {
+			System.out.println("Qubit toBraKet(): Success!");
+			System.out.println(start.toBraKet());
+			return 1;
+		} else {
+			System.out.println("Qubit toBraKet(): FAIL!");
+			System.out.println("Expected: " + expected.getValue());
+			System.out.println("Actual: " + start.getValue());
+			return 0;
+		}
+		}
+
 	public static void main(String[] args) {
 		int testNumber = 2;
 		Qubit testQubit = new Qubit();
@@ -186,6 +331,26 @@ public class TestQubit {
 				break;
 			case (4):
 				TestNot(testQubit, expectedQubit, args);
+				break;
+			case (5):
+				TestsetPhase(testQubit, expectedQubit, args);
+				break;
+			case (6):
+				TestgetPhase(testQubit, expectedQubit, args);
+				break;
+			case (7):
+				break;
+			case (8):
+				Testswap(testQubit, expectedQubit, args);
+				break;
+			case (9):
+				Testcnot(testQubit, expectedQubit, args);
+				break;
+			case (10):
+				Testmeasure(testQubit, expectedQubit, args);
+				break;
+			case (11):
+				TesttoBraKet(testQubit, expectedQubit, args);
 				break;
 			default:
 				System.out.println("Test " + testNumber + " not supported");

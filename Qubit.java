@@ -31,7 +31,7 @@ public class Qubit{
 		else
 		{
 			this.value = Math.abs(v);
-			this.phase = (v >= 0) ? 1 : 0;
+			this.phase = (v >= 0) ? 1 : -1;
 		}
 	}
 
@@ -67,7 +67,7 @@ public class Qubit{
 		else
 		{
 			this.value = Math.abs(v);
-			this.phase = (v >= 0) ? 1 : 0;
+			this.phase = (v >= 0) ? 1 : -1;
 		}
 	}
 
@@ -76,9 +76,13 @@ public class Qubit{
 	{  
 		if(v.equals("White"))
 			this.setValue(0);
-		if(v.equals("Black"))
+		else if(v.equals("Black"))
 			this.setValue(1);
-
+		else
+		{
+			System.out.println("error: wrong string input");
+			return;
+		}
 		this.phase = 1;
 	}
 
@@ -91,6 +95,11 @@ public class Qubit{
 	// assume -1 for negative phase, 1 for positive phase
 	public void setPhase(int phase)
 	{
+		if(Math.abs(phase) != 1)
+		{
+			System.out.println("error: wrong value of phase");
+			return;
+		}
 		this.phase = phase;
 	}
 
@@ -135,24 +144,23 @@ public class Qubit{
 	// Phase is swapped just as the rest of the state is swapped.
 	public void swap(Qubit q2)
 	{
-		float tempval = this.value;
-		int tempphase = this.phase;
+		float tempval = this.getValue();
 
 		this.setValue(q2.getValue());
 
-		q2.setValue(tempval * tempphase);
+		q2.setValue(tempval);
 	}
 
 	// support only 0 and 1 inputs, positive phase 
 	// assume that "this" is control, and q2 is the target.
 	public void cnot(Qubit q2)
 	{
-		if(this.getValue() != 0 || this.getValue() == 1)
+		if(this.getValue() != 0 && this.getValue() != 1)
 		{
 			System.out.println("error: control qubit not 0 or 1 or not positive phase");
 			return;
 		}
-		if(q2.getValue() != 0 || q2.getValue() != 1)
+		if(q2.getValue() != 0 && q2.getValue() != 1)
 		{
 			System.out.println("error: target qubit not 0 or 1 or not positive phase");
 			return;
@@ -168,10 +176,11 @@ public class Qubit{
 	// that might have been present.
 	public int measureValue()
 	{
+		this.setPhase(1);
 		if(Math.random() <= this.value)
-			return 0;
-		else
 			return 1;
+		else
+			return 0;
 	}
 
 	public String toBraKet()
