@@ -122,10 +122,10 @@ public class Qubit{
 	 */
 	public void not()
 	{
-		float current = this.getValue();
+		float current = Math.abs(this.getValue());
 		float flip = -1 * current + 1;
 
-		this.setValue(flip);
+		this.setValue(flip * this.getPhase());
 	}
 
 	// support the following inputs: 0 with positive phase, 1 with positive phase, 
