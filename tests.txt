@@ -31,7 +31,9 @@ java TestQubit 0.75 0.75 6 1
 java TestQubit 0 0 6 1
 
 java TestQubit 1 -0.5 7
-java TestQubit 0 -0.5 7
+java TestQubit 0 0.5 7
+ava TestQubit 0.5 0 7 
+java TestQubit -0.5 1 7
 
 java TestQubit -0.3 0.6 8 0.6 -0.3
 java TestQubit 0.6 -0.3 8 -0.3 0.6

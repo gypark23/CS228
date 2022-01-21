@@ -1,5 +1,7 @@
 import java.text.DecimalFormat;
 
+import javax.lang.model.util.ElementScanner14;
+
 public class Qubit{
 	private float value; // either 0 (white) or 1 (black)
 	private int phase; // either 1 or -1
@@ -132,13 +134,16 @@ public class Qubit{
 	// superposition of 50\%, superposition of 50\% with negative phase
 	public void hgate()
 	{
-		if(this.getValue() != 0 && this.getValue() != 1 && this.getPhase() != 1)
-		{
+		if(this.getValue() == 0)
+			this.setValue((float) (0.5));
+		else if(this.getValue() == 1)
+			this.setValue((float) (-0.5));
+		else if(this.getValue() == 0.5)
+			this.setValue("White");
+		else if(this.getValue() == -0.5)
+			this.setValue("Black");
+		else
 			System.out.println("error: wrong input value or phase");
-			return;
-		}
-
-		this.setValue((float)-0.5);
 	}
 
 	// make sure your implementation works for superposition and phase 

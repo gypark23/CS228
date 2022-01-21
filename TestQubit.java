@@ -243,8 +243,8 @@ public class TestQubit {
 			return 1;
 		} else {
 			System.out.println("Qubit hgate(): FAIL!");
-			System.out.println("Expected: " + expected);
-			System.out.println("Actual: " + start);
+			System.out.println("Expected: " + expected.getValue());
+			System.out.println("Actual: " + start.getValue());
 			return 0;
 		}
 	}
