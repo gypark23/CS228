@@ -287,11 +287,33 @@ public class TestQubit {
 
 		// read the command-line argument
 		// perform the operation
+		float originallVal = start.getValue();
 		int measure = start.measureValue();
 		// check the result and report
 		if (Qubit.compare(start, expected) == 0) {
-			System.out.println("Qubit measureValue(): Success!");
-			System.out.println("Measured Value: " + measure);
+
+			int blackCount = 0;
+			for(int i = 0; i < 10000; i++)
+			{
+				if (measure == 1)
+					blackCount++; 
+				
+				start = new Qubit(originallVal);
+				measure = start.measureValue();
+			}
+
+			if(Math.abs((10000 * Math.abs(originallVal)) - blackCount) < 100)
+			{
+				System.out.println("Qubit measureValue(): Success!");
+				System.out.println("Expected Count of Black: " + (10000 * Math.abs(originallVal)));
+				System.out.println("Actual Count of Black: " + blackCount);
+			}
+			else
+			{
+				System.out.println("Qubit measureValue(): FAIL!");
+				System.out.println("Expected Count of Black: " + (10000 * Math.abs(originallVal)));
+				System.out.println("Actual Count of Black: " + blackCount);
+			}
 			return 1;
 		} else {
 			System.out.println("Qubit measureValue(): FAIL!");
