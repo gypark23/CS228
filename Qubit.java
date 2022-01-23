@@ -1,7 +1,5 @@
 import java.text.DecimalFormat;
 
-import javax.lang.model.util.ElementScanner14;
-
 public class Qubit{
 	private float value; // either 0 (white) or 1 (black)
 	private int phase; // either 1 or -1
