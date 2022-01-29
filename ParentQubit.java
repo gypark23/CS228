@@ -76,15 +76,24 @@ abstract class ParentQubit
         return values.length/2;
     }
     
+    // this merges two sets of qubits and returns a new one that has 
+    // a number of qubits that is the sum of the two. For example, we could 
+    // merge two SingleQubit objects to become one DoubleQubit object. 
+    // this is not implemented in ParentQubit but in the subclasses
     abstract ParentQubit mergeQubits(ParentQubit pq);
 
+    // this prints out the state in bra-ket notation, like last week
     abstract String toBraKet();
 
+    // apply a not gate to each qubit
     abstract void applyNotGate();
 
+    // apply an H gate to each qubit
     abstract void applyHGate();
 
+    // apply an H gate to the qubit in position qb, where numbering starts at 0
     abstract void applyHGate(int qb);
 
+    // apply a swap gate between qubit1 and qubit2, where numbering starts at 0
     abstract void applySwapGate(int qubit1, int qubit2);
 }
