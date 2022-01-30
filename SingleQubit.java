@@ -2,12 +2,11 @@ import java.text.DecimalFormat;
 
 public class SingleQubit extends ParentQubit
 {
-    /*
-    public SingleQubit()
-    {
-        this.ParentQubit();
+
+    public SingleQubit() {        
+        super(1);
+        //TODO Auto-generated constructor stub
     }
-    */
 
     @Override
     ParentQubit mergeQubits(ParentQubit pq)
@@ -19,7 +18,19 @@ public class SingleQubit extends ParentQubit
             return null;
         }
         
-        values
+        float a, b, c, d;
+        a = (float)Math.sqrt(this.getValue(0));
+        b = (float)Math.sqrt(this.getValue(1)) * this.getPhase(1);
+        c = (float)Math.sqrt(pq.getValue(0));
+        d = (float)Math.sqrt(pq.getValue(1)) * pq.getPhase(1);
+        
+        float[] values = {a*b, a*c, b*c, b*d};
+
+        ParentQubit merged = new DoubleQubit();
+        merged.setValues(values);
+
+        return merged;
+
     }
 
     @Override
@@ -28,7 +39,7 @@ public class SingleQubit extends ParentQubit
 		if(this.getValue(0) == 0)
 		{
 			if (this.getPhase(1) == -1)
-				return "- 1>";
+				return "- |1>";
 			else
 				return "|1>";
 		}
@@ -53,12 +64,16 @@ public class SingleQubit extends ParentQubit
 
         this.setValues(appliedMatrix);
     }
-
+    
+    // apply a not gate to the qubit in position qb, where numbering starts at 0 
+    // only do so if qb = 0
     public void applyNotGate(int qb)
     {
-
+        if(qb == 0)
+            this.applyNotGate();
     }
     
+    // apply an H gate to each qubit
     @Override
     public void applyHGate()
     {
@@ -73,16 +88,19 @@ public class SingleQubit extends ParentQubit
             for(int j = 0; j < 2; j++)
             {
                 sum += hgate[i][j] * this.getValues()[i];
-                afterHGate[i] = sum;
             }
+            afterHGate[i] = sum;
         }
 
         this.setValues(afterHGate);
     }
 
+    // apply an H gate to the qubit in position qb, where numbering starts at 0 
+    // only do so if qb = 0
     public void applyHGate(int qb)
     {
-
+        if(qb == 1)
+            this.applyHGate();
     }
 
     public void applySwapGate(int qubit1, int qubit2)
