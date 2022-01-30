@@ -8,6 +8,17 @@ public class SingleQubit extends ParentQubit
         //TODO Auto-generated constructor stub
     }
 
+    private float probToValue(float v)
+    {
+        int sign = (v<0)? -1 : 1;
+        return (float)Math.sqrt(Math.abs(v)) * sign;
+    }
+
+    private float valueToProb(float v)
+    {
+        int sign = (v<0)? -1 : 1;
+        return (float)Math.pow(v, 2) * sign;
+    }
     @Override
     ParentQubit mergeQubits(ParentQubit pq)
     {
@@ -30,7 +41,6 @@ public class SingleQubit extends ParentQubit
         merged.setValues(values);
 
         return merged;
-
     }
 
     @Override
@@ -49,7 +59,7 @@ public class SingleQubit extends ParentQubit
 
         char phase = (this.getPhase(1) == 1)? '+' : '-';        
         DecimalFormat df = new DecimalFormat("0.##");	
-		return df.format(this.getValue(0)) + "|0> " + phase + " " + df.format(this.getValue(1)) + "|1>";
+		return df.format(this.getValue(0)) + "|0> " + phase + " " + df.format(Math.abs(this.getValue(1))) + "|1>";
     }
 
     @Override
@@ -57,8 +67,8 @@ public class SingleQubit extends ParentQubit
     {
         float a, b;
 
-        a = this.getValue(0);
-        b = this.getValue(1);
+        a = valueToProb(this.getValue(0));
+        b = valueToProb(this.getValue(1));
 
         float[] appliedMatrix = {b, a * this.getPhase(1)};
 
@@ -79,18 +89,10 @@ public class SingleQubit extends ParentQubit
     {
         float val = 1/(float)Math.sqrt(2);
         float[][] hgate = {{val, val}, {val, -val}};
-    
         float[] afterHGate = new float[2]; 
-    
-        for(int i = 0; i < 2; i++)
-        {
-            float sum = 0;
-            for(int j = 0; j < 2; j++)
-            {
-                sum += hgate[i][j] * this.getValues()[i];
-            }
-            afterHGate[i] = sum;
-        }
+
+        afterHGate[0] = valueToProb(hgate[0][0] * this.getValue(0) + hgate[0][1] * this.getValue(1));
+        afterHGate[1] = valueToProb(hgate[1][0] * this.getValue(0) + hgate[1][1] * this.getValue(1));
 
         this.setValues(afterHGate);
     }
