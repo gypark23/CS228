@@ -11,6 +11,19 @@ abstract class ParentQubit
             values[i] = 0;
         }
     }
+
+    public float probToValue(float v)
+    {
+        int sign = (v<0)? -1 : 1;
+        return (float)Math.sqrt(Math.abs(v)) * sign;
+    }
+
+    public float valueToProb(float v)
+    {
+        int sign = (v<0)? -1 : 1;
+        return (float)Math.pow(v, 2) * sign;
+    }
+
     // The value in v is the probability of the ith value measuring that combination. 
     // Combinations are always ordered in increasing order from 0 to (2^numqubits)-1. 
     // Values are negative if the phase should be negative.
@@ -40,12 +53,18 @@ abstract class ParentQubit
 
     public float getValue(int i)
     {
-        return values[i];
+        return valueToProb(values[i]);
     }
 
 
     public float[] getValues()
     {
+        float[] probVals = new float[this.getNumQubits() * 2];
+
+        for(int i = 0; i < this.values.length; i++)
+        {
+            probVals[i] = valueToProb(this.values[i]);
+        }
         return values;
     }
 

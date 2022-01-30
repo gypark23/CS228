@@ -8,17 +8,6 @@ public class SingleQubit extends ParentQubit
         //TODO Auto-generated constructor stub
     }
 
-    private float probToValue(float v)
-    {
-        int sign = (v<0)? -1 : 1;
-        return (float)Math.sqrt(Math.abs(v)) * sign;
-    }
-
-    private float valueToProb(float v)
-    {
-        int sign = (v<0)? -1 : 1;
-        return (float)Math.pow(v, 2) * sign;
-    }
     @Override
     ParentQubit mergeQubits(ParentQubit pq)
     {
@@ -35,7 +24,7 @@ public class SingleQubit extends ParentQubit
         c = (float)Math.sqrt(pq.getValue(0));
         d = (float)Math.sqrt(pq.getValue(1)) * pq.getPhase(1);
         
-        float[] values = {a*b, a*c, b*c, b*d};
+        float[] values = {valueToProb(a*b), valueToProb(a*c), valueToProb(b*c), valueToProb(b*d)};
 
         ParentQubit merged = new DoubleQubit();
         merged.setValues(values);
@@ -59,7 +48,7 @@ public class SingleQubit extends ParentQubit
 
         char phase = (this.getPhase(1) == 1)? '+' : '-';        
         DecimalFormat df = new DecimalFormat("0.##");	
-		return df.format(this.getValue(0)) + "|0> " + phase + " " + df.format(Math.abs(this.getValue(1))) + "|1>";
+		return df.format(probToValue(this.getValue(0))) + "|0> " + phase + " " + df.format(Math.abs(probToValue(this.getValue(1)))) + "|1>";
     }
 
     @Override
@@ -91,8 +80,8 @@ public class SingleQubit extends ParentQubit
         float[][] hgate = {{val, val}, {val, -val}};
         float[] afterHGate = new float[2]; 
 
-        afterHGate[0] = valueToProb(hgate[0][0] * this.getValue(0) + hgate[0][1] * this.getValue(1));
-        afterHGate[1] = valueToProb(hgate[1][0] * this.getValue(0) + hgate[1][1] * this.getValue(1));
+        afterHGate[0] = valueToProb(hgate[0][0] * probToValue(this.getValue(0)) + hgate[0][1] * probToValue(this.getValue(1)));
+        afterHGate[1] = valueToProb(hgate[1][0] * probToValue(this.getValue(0)) + hgate[1][1] * probToValue(this.getValue(1)));
 
         this.setValues(afterHGate);
     }
