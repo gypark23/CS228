@@ -1,3 +1,4 @@
+package hw2;
 import java.text.DecimalFormat;
 
 public class Qubit{

@@ -1,3 +1,4 @@
+package hw2;
 public class TestQubit {
 
 	public static int TestConstructor(Qubit start, Qubit expected, String[] args)
