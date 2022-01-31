@@ -19,12 +19,12 @@ public class SingleQubit extends ParentQubit
         }
         
         float a, b, c, d;
-        a = (float)Math.sqrt(this.getValue(0));
-        b = (float)Math.sqrt(this.getValue(1)) * this.getPhase(1);
-        c = (float)Math.sqrt(pq.getValue(0));
-        d = (float)Math.sqrt(pq.getValue(1)) * pq.getPhase(1);
+        a = probToValue(this.getValue(0));
+        b = probToValue(this.getValue(1));
+        c = probToValue(pq.getValue(0));
+        d = probToValue(pq.getValue(1));
         
-        float[] values = {valueToProb(a*b), valueToProb(a*c), valueToProb(b*c), valueToProb(b*d)};
+        float[] values = {valueToProb(a*c), valueToProb(a*d), valueToProb(b*c), valueToProb(b*d)};
 
         ParentQubit merged = new DoubleQubit();
         merged.setValues(values);
@@ -56,10 +56,10 @@ public class SingleQubit extends ParentQubit
     {
         float a, b;
 
-        a = valueToProb(this.getValue(0));
-        b = valueToProb(this.getValue(1));
+        a = this.getValue(0);
+        b = this.getValue(1);
 
-        float[] appliedMatrix = {b, a * this.getPhase(1)};
+        float[] appliedMatrix = {b, a};
 
         this.setValues(appliedMatrix);
     }
@@ -90,7 +90,7 @@ public class SingleQubit extends ParentQubit
     // only do so if qb = 0
     public void applyHGate(int qb)
     {
-        if(qb == 1)
+        if(qb == 0)
             this.applyHGate();
     }
 

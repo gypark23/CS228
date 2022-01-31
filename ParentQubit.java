@@ -5,11 +5,13 @@ abstract class ParentQubit
     // Constructor: initialize all bits to 0
     public ParentQubit(int numqubits)
     {
-        values = new float[numqubits * 2];
-        for(int i = 0; i < numqubits * 2; i++)
+        int size = (int)Math.pow(2, numqubits);
+        values = new float[size];
+        for(int i = 1; i < size; i++)
         {
             values[i] = 0;
         }
+        values[0] = 1;
     }
 
     public float probToValue(float v)
@@ -29,10 +31,17 @@ abstract class ParentQubit
     // Values are negative if the phase should be negative.
     public void setValue(float v, int i)
     {
-        if(v < 0)
-            values[i] = -(float)(Math.sqrt(Math.abs(v)));       
-        else
-            values[i] = (float)Math.sqrt(v);
+        try
+        {
+            if(v < 0)
+                values[i] = -(float)(Math.sqrt(Math.abs(v)));       
+            else
+                values[i] = (float)Math.sqrt(v);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error, out of bound set value");
+        }
     }
 
     // v is the length equal to the number of qubit combinations (2^numqubits). 
@@ -41,19 +50,23 @@ abstract class ParentQubit
     // Values are negative if the phase should be negative.
     public void setValues(float[] v)
     {
-        if(v.length != values.length)
-        {
-            System.out.println("v length incorrect");
-            return;
-        }
-
+        this.values = v;
         for(int i = 0; i < v.length; i++)
             this.setValue(v[i], i);
     }
 
     public float getValue(int i)
     {
-        return valueToProb(values[i]);
+        float value = 0;
+        try
+        {
+            value = valueToProb(values[i]);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error, out of bound get value");
+        }
+        return value;
     }
 
 
@@ -75,12 +88,6 @@ abstract class ParentQubit
 
     public void setPhases(int[] p)
     {
-        if(p.length != values.length)
-        {
-            System.out.println("p length incorrect");
-            return;
-        }
-
         for(int i = 0; i < p.length; i++)
             this.setPhase(p[i], i);
     }
@@ -92,7 +99,7 @@ abstract class ParentQubit
     // this returns the number of qubits this object represents
     public int getNumQubits()
     {
-        return values.length/2;
+        return (int)Math.sqrt(this.values.length);
     }
     
     // this merges two sets of qubits and returns a new one that has 
