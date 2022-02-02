@@ -114,6 +114,9 @@ abstract class ParentQubit
     // apply a not gate to each qubit
     abstract void applyNotGate();
 
+    // apply a not gate to the qubit in position qb, where numbering starts at 0
+    abstract void applyNotGate(int qb); 
+
     // apply an H gate to each qubit
     abstract void applyHGate();
 
