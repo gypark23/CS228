@@ -1,11 +1,14 @@
 abstract class ParentQubit
 {
     private float[] values;
+    private int numqubits;
 
     // Constructor: initialize all bits to 0
     public ParentQubit(int numqubits)
     {
+        this.numqubits = numqubits;
         int size = (int)Math.pow(2, numqubits);
+
         values = new float[size];
         for(int i = 1; i < size; i++)
         {
@@ -72,7 +75,7 @@ abstract class ParentQubit
 
     public float[] getValues()
     {
-        float[] probVals = new float[this.getNumQubits() * 2];
+        float[] probVals = new float[this.values.length];
 
         for(int i = 0; i < this.values.length; i++)
         {
@@ -99,7 +102,7 @@ abstract class ParentQubit
     // this returns the number of qubits this object represents
     public int getNumQubits()
     {
-        return (int)Math.sqrt(this.values.length);
+        return this.numqubits;
     }
     
     // this merges two sets of qubits and returns a new one that has 
