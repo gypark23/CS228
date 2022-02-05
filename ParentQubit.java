@@ -3,6 +3,78 @@ abstract class ParentQubit
     private float[] values;
     private int numqubits;
 
+    public float[] multiplyMatrix(float[][] m)
+    {
+        int dimension = this.getValues().length;
+        float[] returnv = new float[dimension];
+
+        for(int i = 0; i < dimension; i++)
+        {
+            float sum = 0;
+            for(int j = 0; j < dimension; j++)
+            {
+                //System.out.println("i " + i + "j " + j);
+                sum += m[i][j] * probToValue(this.getValue(j));
+            }
+            returnv[i] = valueToProb(sum);
+        }
+
+        return returnv;
+    }
+
+    public static float[][] multiplyMatrix(float[][] m, float[][] n)
+    {
+        int mrow = m.length;
+        int mcol = m[0].length;
+        int brow = n.length;
+        int bcol = n[0].length;
+
+        float[][] retv = new float[mrow][bcol];
+        for (int i = 0; i < mrow; i++) {
+            for (int j = 0; j < bcol; j++) {
+                retv[i][j] = 0.00000f;
+            }
+        }
+
+        for (int i = 0; i < mrow; i++) { // aRow
+            for (int j = 0; j < bcol; j++) { // bColumn
+                for (int k = 0; k < mcol; k++) { // aColumn
+                    retv[i][j] += m[i][k] * n[k][j];
+                }
+            }
+        }
+
+        return retv;
+    }
+
+    public static float[][] tensorProduct(float a[][], float b[][])
+    {
+        int n = a.length, m = a[0].length;
+		int p = b.length, q = b[0].length;
+
+        float[][] returnv = new float[n * p][m * q];
+
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                for(int k = 0; k < p; k++)
+                {
+                    for(int l = 0; l < q; l++)
+                    {
+                        //System.out.println(i + "" + j + "" + k + "" + l);
+                        returnv[i * p + k][j * q + l] = a[i][j] * b[k][l];
+                        //System.out.println(Arrays.deepToString(returnv));
+                    }
+                }
+            }
+        }
+
+        return returnv;
+    }
+
+
+
     // Constructor: initialize all bits to 0
     public ParentQubit(int numqubits)
     {

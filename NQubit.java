@@ -3,51 +3,6 @@ import java.text.DecimalFormat;
 
 public class NQubit extends ParentQubit {
 
-    private float[] multiplyMatrix(float[][] m)
-    {
-        int dimension = this.getValues().length;
-        float[] returnv = new float[dimension];
-
-        for(int i = 0; i < dimension; i++)
-        {
-            float sum = 0;
-            for(int j = 0; j < dimension; j++)
-            {
-                //System.out.println("i " + i + "j " + j);
-                sum += m[i][j] * probToValue(this.getValue(j));
-            }
-            returnv[i] = valueToProb(sum);
-        }
-
-        return returnv;
-    }
-
-    private float[][] tensorProduct(float a[][], float b[][])
-    {
-        int n = a.length, m = a[0].length;
-		int p = b.length, q = b[0].length;
-
-        float[][] returnv = new float[n * p][m * q];
-
-        for(int i = 0; i < n; i++)
-        {
-            for(int j = 0; j < m; j++)
-            {
-                for(int k = 0; k < p; k++)
-                {
-                    for(int l = 0; l < q; l++)
-                    {
-                        //System.out.println(i + "" + j + "" + k + "" + l);
-                        returnv[i * p + k][j * q + l] = a[i][j] * b[k][l];
-                        //System.out.println(Arrays.deepToString(returnv));
-                    }
-                }
-            }
-        }
-
-        return returnv;
-    }
-
     // Constructor: initialize all bits to 0
     public NQubit(int numqubits) {
         super(numqubits);
@@ -104,9 +59,9 @@ public class NQubit extends ParentQubit {
                 }
             }
             //first run, value > 0.01
-            else if(i == 0 && Math.signum(this.getValue(i)) != 0)
+            else if(firstRun && (Math.round(this.getValue(i) * 100.0) / 100.0) != 0)
             {
-                if(this.getPhase(0) > 0)
+                if(this.getPhase(i) > 0)
                 {
                     returnv += df.format(Math.abs(probToValue(this.getValue(i)))) + "|" + binary[i] + "> ";
                 }
@@ -116,7 +71,7 @@ public class NQubit extends ParentQubit {
                 }
                 firstRun = false;
             }
-            else if(Math.signum(this.getValue(i)) != 0)
+            else if((Math.round(this.getValue(i) * 100.0) / 100.0) != 0)
             {
                 if(firstRun)
                 {
@@ -233,6 +188,8 @@ public class NQubit extends ParentQubit {
                 hgateall = tensorProduct(hgateall, identity);
             }
         }
+
+        
 
         float[] afterHGate = multiplyMatrix(hgateall);
         this.setValues(afterHGate);
