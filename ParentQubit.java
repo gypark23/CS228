@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 abstract class ParentQubit
 {
     private float[] values;
@@ -74,7 +76,6 @@ abstract class ParentQubit
     }
 
 
-
     // Constructor: initialize all bits to 0
     public ParentQubit(int numqubits)
     {
@@ -106,16 +107,13 @@ abstract class ParentQubit
     // Values are negative if the phase should be negative.
     public void setValue(float v, int i)
     {
-        try
+        if(v >= 1)
+            values[i] = getPhase(i);
+        else if(v < -1)
+            values[i] = 0;
+        else
         {
-            if(v < 0)
-                values[i] = -(float)(Math.sqrt(Math.abs(v)));       
-            else
-                values[i] = (float)Math.sqrt(v);
-        }
-        catch(Exception e)
-        {
-            System.out.println("Error, out of bound set value");
+            values[i] = probToValue(v);
         }
     }
 
@@ -125,23 +123,14 @@ abstract class ParentQubit
     // Values are negative if the phase should be negative.
     public void setValues(float[] v)
     {
-        this.values = v;
+        this.values = new float[v.length];
         for(int i = 0; i < v.length; i++)
             this.setValue(v[i], i);
     }
 
     public float getValue(int i)
     {
-        float value = 0;
-        try
-        {
-            value = valueToProb(values[i]);
-        }
-        catch(Exception e)
-        {
-            System.out.println("Error, out of bound get value");
-        }
-        return value;
+        return valueToProb(values[i]);
     }
 
 

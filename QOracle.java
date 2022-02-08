@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class QOracle {
 
-    private String code;
+    public String code;
     private float[][] bernfinalop;
     private float[][] archifinalop;
 
@@ -26,9 +26,9 @@ public class QOracle {
         
         float[][] identity = {{1, 0}, {0, 1}};
         bernfinalop = ParentQubit.tensorProduct(ParentQubit.tensorProduct(identity, identity), ParentQubit.tensorProduct(identity, identity));
-        float[][] firstop = null;
-        float[][] secondop = null;
-        float[][] thirdop = null;
+        float[][] firstop;
+        float[][] secondop;
+        float[][] thirdop;
 
         if(this.code.charAt(0) == '1')
         {
@@ -62,10 +62,8 @@ public class QOracle {
     // the last qubit being the response. Apply the oracle. No return value is 
     // necessary because you modify the state of the input.
     public void probeBernVaz(NQubit nq) {
-
         float[] values = nq.multiplyMatrix(bernfinalop);
         nq.setValues(values);
-
     }
 
     // receives a set of 3-bit codes (number from 0-7). Based on that 

@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 //import java.util.Arrays;
+import java.util.Arrays;
 
 public class NQubit extends ParentQubit {
 
@@ -13,9 +14,12 @@ public class NQubit extends ParentQubit {
     // a number of qubits that is the sum of the two.       
     @Override
     ParentQubit mergeQubits(ParentQubit pq) {
+
+        System.out.println(this.toBraKet());
+        System.out.println(pq.toBraKet());
         
         ParentQubit mergedq = new NQubit(this.getNumQubits() + pq.getNumQubits());
-        float[] merged = new float[this.getNumQubits() * pq.getNumQubits()];
+        float[] merged = new float[mergedq.getValues().length];
         for(int i = 0; i < this.getValues().length; i++)
         {
             for(int j = 0; j < pq.getValues().length; j++)
@@ -24,6 +28,9 @@ public class NQubit extends ParentQubit {
             }
         }
         mergedq.setValues(merged);
+
+        //System.out.println(mergedq.toBraKet());
+
         return mergedq;
     }
 
@@ -99,6 +106,8 @@ public class NQubit extends ParentQubit {
     // apply a not gate to every qubit
     @Override
     void applyNotGate() {
+
+    //System.out.println(this.toBraKet());
         int dimension = this.getValues().length;
         float[][] notGate = new float[dimension][dimension];
         for(int i = 0; i < dimension; i++)
@@ -113,13 +122,12 @@ public class NQubit extends ParentQubit {
                 {
                     notGate[i][j] = 0;
                 }
-
             }
         }
-
         float[] afterNot = multiplyMatrix(notGate);
+        //System.out.println(Arrays.toString(afterNot));
         this.setValues(afterNot);
-        
+        //System.out.println(this.toBraKet());
     }
     
     // apply a not gate to the qubit in position qb, where numbering starts at 0
@@ -146,12 +154,14 @@ public class NQubit extends ParentQubit {
         }
 
         float[] afterNot = multiplyMatrix(notgateall);
+
         this.setValues(afterNot);
     }
 
     // apply an H gate to each qubit
     @Override
     void applyHGate() {
+
         float val = 1/(float)Math.sqrt(2);
         float[][] hgate = {{val, val}, {val, -val}};
         float[][] hgateall = {{val, val}, {val, -val}};
@@ -169,6 +179,7 @@ public class NQubit extends ParentQubit {
     // apply an H gate to the qubit in position qb, where numbering starts at 0
     @Override
     void applyHGate(int qb) {
+
         float val = 1/(float)Math.sqrt(2);
         float[][] hgate = {{val, val}, {val, -val}};
         float[][] hgateall = {{val, val}, {val, -val}};

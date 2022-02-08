@@ -13,7 +13,7 @@ public class DoubleQubit extends ParentQubit
     @Override
     ParentQubit mergeQubits(ParentQubit pq)
     {
-        return null;
+        return (NQubit)this.mergeQubits(pq);
     }
 
     @Override

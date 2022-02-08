@@ -27,35 +27,12 @@ public class QCircuit {
     // no return value is necessary because you modify the input nq. 
     public static void archimedes(NQubit nq, QOracle qo) 
     {
+        //System.out.println(Arrays.toString(nq.getValues()));
         nq.applyHGate();
-        //System.out.println(nq.toBraKet());
-        //System.out.println(Arrays.toString(nq.getValues()));
         qo.probeArchimedes(nq);
-        //System.out.println(Arrays.toString(nq.getValues()));
         nq.applyHGate(0);
         nq.applyHGate(1);
         nq.applyHGate(2);
         //System.out.println(Arrays.toString(nq.getValues()));
-    }
-
-
-    public static void main(String[] args)
-    {
-        NQubit bernaz = new NQubit(4);
-        float[] init = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        bernaz.setValues(init);
-        System.out.println(bernaz.toBraKet());
-        QOracle bo = new QOracle();
-        bo.setBernVaz(2);
-        QCircuit.bernvaz(bernaz, bo);
-        System.out.println(bernaz.toBraKet());
-        NQubit archi = new NQubit(4);
-        archi.setValues(init);
-        System.out.println(archi.toBraKet());
-        QOracle ao = new QOracle();
-        int[] empty = new int[] { 1, 2, 3, 4 };
-        ao.setArchimedes(empty);
-        QCircuit.archimedes(archi, ao);
-        System.out.println(archi.toBraKet());
     }
 }
